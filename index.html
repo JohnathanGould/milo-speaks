@@ -468,7 +468,8 @@
   @media (max-width: 600px) {
     header { padding: 0.8rem 1rem; }
     .header-logo { font-size: 1.2rem; }
-    nav a { font-size: 0.8rem; padding: 0.3rem 0.6rem; }
+    nav a:not(.btn-support) { display: none; }
+    .btn-support { font-size: 0.8rem !important; padding: 0.4rem 0.8rem !important; }
     .tagline-strip p { font-size: 1.2rem; }
     .promise-bar { gap: 1rem; }
     section { padding: 2.5rem 1rem; }

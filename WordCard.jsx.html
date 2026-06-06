@@ -1,0 +1,229 @@
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:transparent;font-family:var(--font-sans,sans-serif)}
+.wrap{max-width:390px;margin:0 auto;background:#0d1018;min-height:600px;padding-bottom:24px;position:relative}
+.topbar{display:flex;align-items:center;padding:14px 16px 10px}
+.back-btn{display:flex;align-items:center;gap:5px;font-size:13px;color:rgba(255,255,255,0.45);background:none;border:none;cursor:pointer;padding:0}
+.stop-header{padding:0 16px 14px}
+.stop-tag{font-size:11px;font-weight:500;color:rgba(245,197,24,0.7);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.stop-title{font-size:22px;font-weight:500;color:#F0D898}
+.stop-sub{font-size:13px;color:rgba(255,255,255,0.4);margin-top:3px}
+.prog-row{display:flex;align-items:center;gap:7px;padding:0 16px 14px}
+.pdot{width:8px;height:8px;border-radius:50%}
+.pdot.curr{width:10px;height:10px;box-shadow:0 0 6px rgba(245,197,24,0.5)}
+.prog-lbl{font-size:12px;color:rgba(255,255,255,0.35);margin-left:2px}
+.tab-row{display:flex;margin:0 16px 16px;border-radius:10px;background:#131820;border:0.5px solid rgba(255,255,255,0.08);overflow:hidden}
+.main-tab{flex:1;padding:10px;text-align:center;font-size:14px;font-weight:500;cursor:pointer;transition:background 0.15s;color:rgba(255,255,255,0.4)}
+.main-tab.on{background:rgba(245,197,24,0.12);color:#F5C518}
+.main-tab.watch-on{background:rgba(198,11,30,0.12);color:#FF6060}
+.tab-content{display:none;padding:0 0 80px}
+.tab-content.on{display:block}
+.word-tabs{display:flex;padding:0 16px;gap:4px;margin-bottom:14px}
+.wtab{flex:1;padding:7px 4px;text-align:center;font-size:12px;border-radius:8px;cursor:pointer;border:0.5px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.03)}
+.wtab.on{background:rgba(245,197,24,0.12);color:#F5C518;border-color:rgba(245,197,24,0.25)}
+.card-outer{background:#131820;border-radius:16px;border:0.5px solid rgba(255,255,255,0.1);overflow:hidden;margin:0 16px 12px}
+.card-header{padding:16px 16px 12px;border-bottom:0.5px solid rgba(255,255,255,0.07)}
+.type-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:500;padding:3px 8px;border-radius:20px;background:rgba(245,197,24,0.1);color:rgba(245,197,24,0.7);border:0.5px solid rgba(245,197,24,0.2);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px}
+.header-body{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.word-es-lg{font-size:30px;font-weight:500;color:#F5C518;line-height:1}
+.audio-circle{width:30px;height:30px;border-radius:50%;background:rgba(245,197,24,0.1);border:0.5px solid rgba(245,197,24,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.word-translation{font-size:14px;color:rgba(255,255,255,0.55);margin-top:5px}
+.img-box{width:82px;height:82px;border-radius:10px;background:#1e2530;border:0.5px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;position:relative;transition:border-color 0.15s}
+.img-box:hover{border-color:rgba(255,255,255,0.2)}
+.expand-hint{position:absolute;bottom:4px;right:4px;width:16px;height:16px;border-radius:3px;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center}
+.section{padding:12px 16px;border-bottom:0.5px solid rgba(255,255,255,0.06)}
+.section:last-child{border-bottom:none}
+.sec-label{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:500;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+.usage-text{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6}
+.usage-text strong{color:rgba(255,255,255,0.85);font-weight:500}
+.example-es{font-size:15px;color:rgba(255,255,255,0.9);line-height:1.5;margin-bottom:3px}
+.hl{color:#F5C518;font-weight:500}
+.example-en{font-size:12px;color:rgba(255,255,255,0.35);font-style:italic;margin-bottom:10px}
+.hear-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:9px;border-radius:9px;border:0.5px solid rgba(198,11,30,0.4);background:rgba(198,11,30,0.1);color:rgba(255,110,110,0.9);font-size:13px;font-weight:500;cursor:pointer}
+.tip-box{background:rgba(245,197,24,0.05);border-radius:9px;padding:10px 12px;border:0.5px solid rgba(245,197,24,0.15)}
+.tip-title{font-size:11px;font-weight:500;color:rgba(245,197,24,0.65);margin-bottom:5px;display:flex;align-items:center;gap:4px}
+.tip-text{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.5}
+.tip-compare{margin-top:7px;font-size:12px;color:rgba(255,255,255,0.35);line-height:1.6}
+.tip-compare span{color:rgba(245,197,24,0.6)}
+.progress-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.prog-cell{background:rgba(255,255,255,0.04);border-radius:8px;padding:9px 6px;text-align:center}
+.prog-val{font-size:19px;font-weight:500}
+.prog-lbl{font-size:10px;color:rgba(255,255,255,0.3);margin-top:2px;text-transform:uppercase;letter-spacing:0.3px}
+.watch-content{padding:0 16px}
+.yt-placeholder{background:#131820;border-radius:14px;border:0.5px solid rgba(255,255,255,0.08);overflow:hidden;margin-bottom:14px}
+.yt-thumb{height:180px;background:#1a0a0a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px}
+.yt-play{width:56px;height:56px;border-radius:50%;background:rgba(198,11,30,0.15);border:1.5px solid rgba(198,11,30,0.3);display:flex;align-items:center;justify-content:center}
+.channel-card{background:#131820;border-radius:12px;border:0.5px solid rgba(255,255,255,0.08);padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:14px;cursor:pointer;transition:border-color 0.15s}
+.channel-card:hover{border-color:rgba(255,255,255,0.18)}
+.channel-icon{width:44px;height:44px;border-radius:50%;background:#C60B1E;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fetch-bar{position:absolute;bottom:0;left:0;right:0;padding:12px 16px;background:#0d1018;border-top:0.5px solid rgba(255,255,255,0.07)}
+.fetch-btn{width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:500;border:none;cursor:pointer;background:#2D9E5F;color:white;transition:opacity 0.15s}
+.fetch-btn:hover{opacity:0.9}
+.img-modal{display:none;position:absolute;top:0;left:0;width:100%;height:100%;min-height:600px;background:rgba(0,0,0,0.88);z-index:100;align-items:center;justify-content:center;flex-direction:column;gap:14px;padding:20px}
+.img-modal.open{display:flex}
+.img-modal-inner{width:100%;max-width:320px;border-radius:18px;background:#131820;border:0.5px solid rgba(255,255,255,0.1);overflow:hidden}
+.img-modal-img{width:100%;height:240px;background:#1e2530;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px}
+.img-modal-footer{padding:14px 16px}
+.close-btn{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,0.08);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
+</style>
+
+<div class="wrap" id="wrap">
+  <h2 class="sr-only">Stop detail with Learn and Watch tabs — green Fetch button</h2>
+  <div class="topbar">
+    <button class="back-btn"><i class="ti ti-arrow-left" aria-hidden="true"></i> Yo Soy</button>
+  </div>
+  <div class="stop-header">
+    <div class="stop-tag">Stop 4 of 5 · Path 2</div>
+    <div class="stop-title">Estar — Yo</div>
+    <div class="stop-sub">5 words · Beginner I</div>
+  </div>
+  <div class="prog-row">
+    <div class="pdot" style="background:#2D9E5F"></div>
+    <div class="pdot" style="background:#2D9E5F"></div>
+    <div class="pdot" style="background:#2D9E5F"></div>
+    <div class="pdot curr" style="background:#F5C518"></div>
+    <div class="pdot" style="background:#333"></div>
+    <div class="pdot" style="background:#222;border:1px solid #333"></div>
+    <div class="prog-lbl">Stop 4 in progress</div>
+  </div>
+  <div class="tab-row">
+    <div class="main-tab on" id="tab-learn" onclick="switchTab('learn')">
+      <i class="ti ti-book-2" style="font-size:14px;vertical-align:-2px;margin-right:4px" aria-hidden="true"></i> Learn
+    </div>
+    <div class="main-tab" id="tab-watch" onclick="switchTab('watch')">
+      <i class="ti ti-brand-youtube" style="font-size:14px;vertical-align:-2px;margin-right:4px" aria-hidden="true"></i> Watch
+    </div>
+  </div>
+
+  <div class="tab-content on" id="content-learn">
+    <div class="word-tabs">
+      <div class="wtab on">estoy</div>
+      <div class="wtab">estás</div>
+      <div class="wtab">está</div>
+      <div class="wtab">estar</div>
+      <div class="wtab">aquí</div>
+    </div>
+    <div class="card-outer">
+      <div class="card-header">
+        <div class="type-badge"><i class="ti ti-letters-case" aria-hidden="true"></i> Verb · conjugated</div>
+        <div class="header-body">
+          <div style="flex:1">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+              <div class="word-es-lg">estoy</div>
+              <button class="audio-circle" aria-label="Hear estoy">
+                <i class="ti ti-volume" style="font-size:15px;color:#F5C518" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="word-translation">I am (location or state)</div>
+          </div>
+          <div class="img-box" onclick="openImg()" role="button" aria-label="Expand image">
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px">
+              <i class="ti ti-photo" style="font-size:20px;color:rgba(255,255,255,0.1)" aria-hidden="true"></i>
+              <div style="font-size:9px;color:rgba(255,255,255,0.15);text-align:center;line-height:1.3">image<br>coming soon</div>
+            </div>
+            <div class="expand-hint">
+              <i class="ti ti-arrows-maximize" style="font-size:9px;color:rgba(255,255,255,0.4)" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sec-label"><i class="ti ti-book-2" aria-hidden="true"></i> Meaning</div>
+        <div class="usage-text"><strong>Estoy</strong> is the first-person form of <strong>estar</strong> — used for location, temporary states, and feelings. Not the same as <strong>soy</strong> (ser), which is for identity.</div>
+      </div>
+      <div class="section">
+        <div class="sec-label"><i class="ti ti-message-circle" aria-hidden="true"></i> Example</div>
+        <div class="example-es"><span class="hl">Estoy</span> en el aeropuerto.</div>
+        <div class="example-en">I am at the airport.</div>
+        <button class="hear-btn"><i class="ti ti-volume" style="font-size:14px" aria-hidden="true"></i> Hear example sentence</button>
+      </div>
+      <div class="section">
+        <div class="sec-label"><i class="ti ti-bulb" aria-hidden="true"></i> Mini tip</div>
+        <div class="tip-box">
+          <div class="tip-title"><i class="ti ti-alert-circle" style="font-size:12px" aria-hidden="true"></i> Estar vs Ser</div>
+          <div class="tip-text">Use <strong style="color:#F5C518">estar</strong> for where you are and how you feel right now. Use <strong style="color:rgba(255,255,255,0.5)">ser</strong> for who you are.</div>
+          <div class="tip-compare"><span>Estoy</span> cansado → I am tired (right now)<br><span style="color:rgba(255,255,255,0.3)">Soy canadiense</span> → I am Canadian (always)</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sec-label"><i class="ti ti-chart-bar" aria-hidden="true"></i> Your progress</div>
+        <div class="progress-grid">
+          <div class="prog-cell"><div class="prog-val" style="color:#2D9E5F">16</div><div class="prog-lbl">Correct</div></div>
+          <div class="prog-cell"><div class="prog-val" style="color:#C60B1E">3</div><div class="prog-lbl">Wrong</div></div>
+          <div class="prog-cell"><div class="prog-val" style="color:#F5C518">84%</div><div class="prog-lbl">Accuracy</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="content-watch">
+    <div class="watch-content">
+      <div class="yt-placeholder">
+        <div class="yt-thumb">
+          <div class="yt-play">
+            <i class="ti ti-player-play" style="font-size:22px;color:rgba(198,11,30,0.7)" aria-hidden="true"></i>
+          </div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.2)">Video in production — coming soon</div>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="font-size:14px;font-weight:500;color:rgba(255,255,255,0.6);margin-bottom:3px">Stop 4 — Estar · Yo · Location</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.25)">Milo Speaks Spanish · Path 2</div>
+          <div style="display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:3px 8px;border-radius:20px;background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.3);border:0.5px solid rgba(255,255,255,0.08);margin-top:6px">
+            <i class="ti ti-clock" style="font-size:10px" aria-hidden="true"></i> Coming soon
+          </div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Milo Speaks Spanish on YouTube</div>
+      <div class="channel-card">
+        <div class="channel-icon">
+          <i class="ti ti-brand-youtube" style="font-size:22px;color:white" aria-hidden="true"></i>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:14px;font-weight:500;color:rgba(255,255,255,0.7)">Milo Speaks Spanish</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-top:2px">Short lessons for every Stop · Subscribe free</div>
+        </div>
+        <i class="ti ti-external-link" style="font-size:16px;color:rgba(255,255,255,0.2)" aria-hidden="true"></i>
+      </div>
+      <div style="background:#131820;border-radius:12px;padding:16px;border:0.5px solid rgba(255,255,255,0.07);text-align:center">
+        <i class="ti ti-bell" style="font-size:24px;color:rgba(245,197,24,0.4);display:block;margin-bottom:8px" aria-hidden="true"></i>
+        <div style="font-size:13px;font-weight:500;color:rgba(255,255,255,0.5);margin-bottom:4px">Get notified when this video drops</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.25);line-height:1.5">Subscribe to the Milo Speaks Spanish channel and you'll be the first to know.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fetch-bar">
+    <button class="fetch-btn">Start Fetch 🐾</button>
+  </div>
+
+  <div class="img-modal" id="imgModal">
+    <div class="img-modal-inner">
+      <div class="img-modal-img">
+        <i class="ti ti-photo" style="font-size:40px;color:rgba(255,255,255,0.08)" aria-hidden="true"></i>
+        <div style="font-size:12px;color:rgba(255,255,255,0.18)">Image coming soon</div>
+      </div>
+      <div class="img-modal-footer">
+        <div style="font-size:26px;font-weight:500;color:#F5C518">estoy</div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.45);margin-top:3px">I am (location or state)</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.5;margin-top:10px;padding-top:10px;border-top:0.5px solid rgba(255,255,255,0.07)">
+          <span style="color:#F5C518">Estoy</span> en el aeropuerto.<br>
+          <span style="font-size:12px;color:rgba(255,255,255,0.3);font-style:italic">I am at the airport.</span>
+        </div>
+      </div>
+    </div>
+    <button class="close-btn" onclick="closeImg()" aria-label="Close image">
+      <i class="ti ti-x" style="font-size:18px;color:rgba(255,255,255,0.6)" aria-hidden="true"></i>
+    </button>
+  </div>
+</div>
+
+<script>
+function switchTab(t){
+  document.getElementById('tab-learn').className='main-tab'+(t==='learn'?' on':'');
+  document.getElementById('tab-watch').className='main-tab'+(t==='watch'?' watch-on':'');
+  document.getElementById('content-learn').className='tab-content'+(t==='learn'?' on':'');
+  document.getElementById('content-watch').className='tab-content'+(t==='watch'?' on':'');
+}
+function openImg(){document.getElementById('imgModal').classList.add('open')}
+function closeImg(){document.getElementById('imgModal').classList.remove('open')}
+</script>
